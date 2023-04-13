@@ -20,3 +20,4 @@
 `AND r.customer_id = c.customer_id `
 Тут связующая таблица к film, наверно можно было использовать JOIN
 `AND i.inventory_id = r.inventory_id `
+
