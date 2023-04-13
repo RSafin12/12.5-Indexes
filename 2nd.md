@@ -1,4 +1,4 @@
-[original](https://github.com/RSafin12/12.5-Indexes/blob/main/2nd.md)
+![original](https://github.com/RSafin12/12.5-Indexes/blob/main/2nd.md)
 Первая строка простая, тут мы запрашиваем фио пользователя
 `SELECT DISTINCT CONCAT(c.last_name, ' ', c.first_name) AS FIO,`
 
