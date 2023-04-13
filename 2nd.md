@@ -40,5 +40,14 @@ LEFT JOIN inventory i USING(inventory_id)
 LEFT JOIN film f USING(film_id)
 WHERE DATE(p.payment_date) = '2005-07-30' and p.payment_date = r.rental_date and r.customer_id = c.customer_id and i.inventory_id = r.inventory_id;
 ```
-
-
+Финальный вариант с учетом рекомендаций  
+```
+SELECT  CONCAT(c.last_name, ' ', c.first_name), 
+SUM(p.amount)  
+FROM payment p
+LEFT JOIN rental r USING(rental_id)
+LEFT JOIN customer c ON r.customer_id = c.customer_id
+WHERE DATE(p.payment_date) = '2005-07-30' and p.payment_date = r.rental_date and r.customer_id = c.customer_id 
+GROUP BY c.customer_id 
+ORDER BY c.customer_id 
+```
