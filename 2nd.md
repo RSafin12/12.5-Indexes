@@ -42,27 +42,31 @@ WHERE DATE(p.payment_date) = '2005-07-30' and p.payment_date = r.rental_date and
 ```
 Финальный вариант с учетом рекомендаций  
 ```
-SELECT  CONCAT(c.last_name, ' ', c.first_name), 
-SUM(p.amount)  
+SELECT  CONCAT(c.last_name, ' ', c.first_name) AS FIO, 
+SUM(p.amount) AS summ 
 FROM payment p
-LEFT JOIN rental r USING(rental_id)
+LEFT JOIN rental r ON p.rental_id = r.rental_id  
 LEFT JOIN customer c ON r.customer_id = c.customer_id
-WHERE DATE(p.payment_date) = '2005-07-30' and p.payment_date = r.rental_date and r.customer_id = c.customer_id 
+WHERE payment_date >= '2005-07-30' AND payment_date < DATE_ADD('2005-07-30', INTERVAL 1 DAY)
+and p.payment_date = r.rental_date 
+and r.customer_id = c.customer_id 
 GROUP BY c.customer_id 
-ORDER BY c.customer_id 
+ORDER BY c.customer_id; 
 ```
+
+
 Узкие места  
 - лишние таблицы  
 - лишние условие  
 - оконная функция, с ней запрос тяжелее  
-- кажется, с JOIN работает быстрее, чем с несколькими таблицами в FROM  
-  
+- кажется, с JOIN работает быстрее, чем с несколькими таблицами в FROM    
 
 Итого
 1. Нужно понять что именно выводит запрос.  
 2. После декомпозировать его на отдельные составляющие.  
 3. Подумать как можно "упростить" каждую составляющую или найти более легковесный вариант.  
-4. Подумать, а все ли таблицы в запросе нужны? Можно ли обойтись без каких-либо таблиц?  
+4. Где можно добавить индексы? Что мешает использованию индекса?  
+5. Подумать, а все ли таблицы в запросе нужны? Можно ли обойтись без каких-либо таблиц?  
 
 
 
